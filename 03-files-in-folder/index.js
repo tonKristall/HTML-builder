@@ -8,12 +8,10 @@ const pathDir = path.join(__dirname, NAME_DIR);
 const genStringAboutFile = async (fullName) => {
   const pathFile = path.join(pathDir, fullName);
   const fd = await promises.open(pathFile);
+  const extFile = path.extname(fullName);
+  const nameFile = path.basename(fullName, extFile);
   const statFile = await fd.stat()
-  const splitName = fullName.split('.');
-  const extName = splitName[splitName.length - 1];
-  splitName.pop();
-  const name = splitName.join('.');
-  console.log(name + ' - ' + extName + ' - ' + statFile.size);
+  console.log(nameFile + ' - ' + extFile.slice(1) + ' - ' + statFile.size);
 };
 
 readdir(pathDir, { withFileTypes: true }, (err, dirents) => {
